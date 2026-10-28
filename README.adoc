@@ -36,6 +36,20 @@ Online documentation is available link:https://nasa-lis.github.io/LISF/[here].
 
 Navigate into the link:https://github.com/NASA-LIS/LISF/tree/master/docs[`docs/`] subdirectory of this repository to view our documentation. See the `docs/README` file for instructions.
 
+== Building with conda-forge (no library image)
+
+The installation guide and the release build expect the libraries in a prebuilt image (see `.github/scripts/appimage/lisf.env`), and `./configure` asks its questions interactively. On Linux x86_64 the same build can be done with conda-forge libraries and no questions, for example in a container build. The environment pins the versions it was checked with (GNU 12.4, MPICH 4.3.2, ESMF 8.9.1, HDF5 1.14.6, netCDF 4.10.0, ecCodes 2.47.0); HDF4 is built from the HDF Group's source because conda-forge's `hdf4` has no Fortran interface, which LDT needs.
+
+[source,sh]
+----
+conda env create -f environment.yml
+conda activate lisf
+scripts/conda_build/build_hdf4.sh "$CONDA_PREFIX/hdf4-fortran"
+HDF4_PREFIX="$CONDA_PREFIX/hdf4-fortran" scripts/conda_build/build_lisf.sh ldt lis lvt
+----
+
+This gives `ldt/LDT` (serial), `lis/LIS` (MPI, run it as `mpirun -np N ./LIS` or as `./LIS` for one process) and `lvt/LVT` (serial). The configure answers are listed one per line, with the reason for each, in `scripts/conda_build/build_lisf.sh`; they are the defaults of `.github/scripts/appimage/compile_lisf` except that HDF-EOS2 and GeoTIFF are off (not available on conda-forge) and PIO is on (conda-forge's ESMF links against it). The executables find their libraries in the environment (it is on their RPATH), so keep the environment where it was installed, and use its `mpirun`.
+
 == Support
 
 Visit our link:https://github.com/NASA-LIS/LISF/discussions[Discussions] forum on GitHub.
