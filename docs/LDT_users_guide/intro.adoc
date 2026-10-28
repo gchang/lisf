@@ -1,0 +1,47 @@
+
+[[sec-intro]]
+== Introduction
+
+This is the Users Guide for the Land surface Data Toolkit (LDT). This document describes how to download and install the LDT software.  It also describes LDT`'s run-time configuration options (the _ldt.config_ file).
+
+This document consists of 7 sections, described as follows:
+
+. *<<sec-intro>>*:
+   the section you are currently reading.
+
+. *<<sec-backgrd>>*:
+   general information about LDT.
+
+. *<<sec-prelim>>*:
+   general information, steps, instructions, and definitions used throughout the rest of this document.
+
+. *<<sec-obtain-src>>*:
+   the steps needed to download the source code.
+
+. *<<sec-build>>*:
+   the steps needed to build the LDT executable.
+
+. *<<sec-run>>*:
+   the steps needed to prepare and submit a run.
+
+. *<<sec-ldtconfigfile>>*:
+   describes the various run-time configurations.
+
+=== What's New
+//\attention{See \file{RELEASE\_NOTES} found in the \file{source.tar.gz} file for more
+//details.  (See Section~\ref{sec:obtain-src}.)}
+
+==== Version 7.8
+
+. Includes new runmodes
+* Snow and Ice Products (SNIP) subsystem
+* Weather Satellite Follow-on Microwave (WSF-M)
+* Support ensemble mode for RAPID
+. Supports additional data assimilation observations
+* Support Weather Satellite Follow-on Microwave (WSF-M) soil moisture retrievals and CDF generation
+* Support operational enhanced SMAP (SMAP_E_OPL) soil moisture retrievals
+. Supports additional data and parameters
+* Support processing US Navy ESPC-D SST data in USAFSI
+* Support processing AquaCrop parameters
+* Support processing HYMAP levee, node lat, node lon, runoff bias, urban drain outlet, and land grid area parameters
+

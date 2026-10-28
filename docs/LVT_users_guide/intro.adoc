@@ -1,0 +1,46 @@
+
+[[sec-intro]]
+== Introduction
+
+This is the Users Guide for Land surface Verification Toolkit (LVT; <<kumar_etal_gmd_2012>>).
+This document describes how to download and install the LVT software.  It also describes LVT`'s run-time configuration options (the _lvt.config_ file).
+
+This document consists of 9 sections, described as follows:
+
+. *<<sec-intro>>*:
+   the section you are currently reading.
+
+. *<<sec-backgrd>>*:
+   general information about the LVT.
+
+. *<<sec-prelim>>*:
+   general information, steps, instructions, and definitions used throughout the rest of this document.
+
+. *<<sec-obtain-src>>*:
+   the steps needed to download the source code.
+
+. *<<sec-build>>*:
+   the steps needed to build the LVT executable.
+
+. *<<sec-run>>*:
+   the steps needed to run the LVT executable.
+
+. *<<sec-lvtconfigfile>>*:
+   describes the user-configurable options.
+
+. *<<sec-metricslisttable>>*:
+   describes the specification of various metrics in LVT.
+
+. *<<sec-modeloutputlisttable>>*:
+   describes the specification of the model output from LIS.
+
+=== What's New
+//\attention{See \file{RELEASE\_NOTES} found in the \file{source.tar.gz} file for more details.  (See Section~\ref{sec-obtain-src}.)}
+
+==== Version 7.8
+
+. Includes new runmode
+* SNIPpost
+. Supports additional data streams
+* SMAP L2 NRT soil moisture retrieval product
+

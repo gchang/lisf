@@ -1,0 +1,61 @@
+= Land surface Verification Toolkit (LVT): LVT {lisfrevision} Users Guide
+:doctype: book
+:sectnums:
+:toc:
+:math:
+:mathematical-format: svg
+:imagesoutdir: images
+:stem: latexmath
+:lisfurl: https://lis.gsfc.nasa.gov
+:nasalisf: https://github.com/NASA-LIS/LISF
+:githuburl: https://github.com
+:nasalisfpages: https://nasa-lis.github.io/LISF/
+:apachelicense: https://www.apache.org/licenses/LICENSE-2.0
+:emdash: —
+:endash: –
+:vertellipsis: ⋮
+:publicrelease:
+ifdef::publicrelease[]
+:revnumber: 5.0
+:revdate: 5 May 2026
+:lisfrevision: 7.8
+:lvttarball: LISF_public_release_7.8.0.tar.gz
+endif::[]
+ifndef::publicrelease[]
+:revnumber: 4.1
+:revdate: 21 Nov 2025
+:lisfrevision: 7.8
+:lvttarball: LISF_557WW_release_7.8.0.tar.gz
+endif::[]
+
+// Set :publicrelease: when compiling the public release version of the Users Guide.
+// Set :publicrelease!: when compiling the 557WW release version of the Users Guide.
+
+include::intro.adoc[]
+include::backgrd.adoc[]
+include::prelim.adoc[]
+include::obtain-source.adoc[]
+include::build.adoc[]
+include::run.adoc[]
+include::../../lvt/configs/lvt.config.adoc[]
+include::../../lvt/configs/METRICS.TBL.adoc[]
+include::../../lvt/configs/MODEL_OUTPUT_LIST_LVT.TBL.adoc[]
+//[appendix]
+// NO include::common_errors.adoc[]
+[appendix]
+include::lvt_runmode0.adoc[]
+[appendix]
+include::lvt_output_format.adoc[]
+// NO include::d_latlon_example.adoc[]
+// NO include::d_ps_example.adoc[]
+// NO include::d_gaussian_example.adoc[]
+// NO include::d_lambert_example.adoc[]
+// NO include::d_mercator_example.adoc[]
+// NO include::d_utm_example.adoc[]
+// NO include::configure.lvt.adoc[]
+[appendix]
+include::whatsnew.adoc[]
+[appendix]
+include::revision_table.adoc[]
+include::lis_refs.bib.adoc[]
+
