@@ -15,14 +15,16 @@ channels:
   - conda-forge
 dependencies:
   # compilers and build tools (configure is Perl, the dependency scripts are Python 3,
-  # the makefiles call ar from binutils)
+  # the makefiles call ar from binutils, and lis/make/Makefile edits its file list with vim;
+  # Perl stays at 5.32, the version conda-forge's vim is built against)
   - gfortran=12.4.0
   - gcc=12.4.0
   - gxx=12.4.0
   - binutils=2.46.1
   - make=4.4.1
-  - perl=5.44.0
+  - perl=5.32.1
   - python=3.11.18
+  - vim=9.2.1252
   # MPI and libraries
   - mpich=4.3.2
   - esmf=8.9.1=mpi_mpich*

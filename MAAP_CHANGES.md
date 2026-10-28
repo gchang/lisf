@@ -38,6 +38,10 @@ For LDT the script also edits the generated `make/configure.ldt` so that the sta
 
 `build_lisf.sh` sent configure and compile output only to `<component>/conda_build_configure.log` and `conda_build_compile.log`, so a container build, which keeps no files from a failed step, showed only "lis compile failed, see lis/conda_build_compile.log" and never the compiler's error. When a step fails, the script now also prints the log's first error lines (up to 20) and its last 60 lines. Nothing else changes: a successful build prints the same as before.
 
+## 2026-10-28: vim in `environment.yml`
+
+`lis/make/Makefile` (line 11) appends `../offline` to the generated file list with `vim -e`, so the LIS compile stops with "make: vim: No such file or directory" (error 127) on a system without vim, such as a plain container image; LDT and LVT do not use it. `environment.yml` now installs vim 9.2.1252 from conda-forge, and Perl moves from 5.44.0 to 5.32.1, the Perl that conda-forge's vim is built against (Perl only runs the configure scripts). No source file changes, and the executables are built the same way.
+
 ## 2026-10-28: README section
 
 "Building with conda-forge (no library image)" in `README.adoc`, with the four commands.
