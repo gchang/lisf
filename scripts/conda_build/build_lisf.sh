@@ -6,7 +6,9 @@
 #   HDF4_PREFIX=<build_hdf4.sh prefix> scripts/conda_build/build_lisf.sh [ldt] [lis] [lvt]
 # With no arguments all three are built. JOBS sets the make jobs (default 4). Each component's
 # configure and compile output goes to <component>/conda_build_configure.log and
-# <component>/conda_build_compile.log. The executables are ldt/LDT, lis/LIS and lvt/LVT.
+# <component>/conda_build_compile.log; when a step fails, its first error lines and the end of its
+# log are also printed, so the cause shows in a build that keeps no files. The executables are
+# ldt/LDT, lis/LIS and lvt/LVT.
 #
 # The answers follow the project's own .github/scripts/appimage/compile_lisf (the default
 # settings, which the public testcase walkthrough asks for because its target outputs were made
@@ -98,6 +100,17 @@ lvt_answers=(
   1  # Use PIO?: yes (adds -lpioc, needed by conda-forge's libesmf.so)
 )
 
+# Print the first error lines and the last 60 lines of a failed step's log to stderr.
+show_log() {
+  {
+    echo "---- first error lines of $1 ----"
+    grep -n -i -m 20 -E 'error|fatal|cannot|not found|killed' "$1" || echo "(none matched)"
+    echo "---- last 60 lines of $1 ----"
+    tail -n 60 "$1"
+    echo "---- end of $1 ----"
+  } >&2
+}
+
 for c in "${components[@]}"; do
   case $c in
     ldt) answers=("${ldt_answers[@]}");;
@@ -107,9 +120,9 @@ for c in "${components[@]}"; do
   esac
   cd "$repo/$c"
   printf '%s\n' "${answers[@]}" | ./configure > conda_build_configure.log 2>&1 \
-    || { echo "$c configure failed, see $c/conda_build_configure.log" >&2; exit 1; }
+    || { echo "$c configure failed, see $c/conda_build_configure.log" >&2; show_log conda_build_configure.log; exit 1; }
   grep -q 'generated successfully' conda_build_configure.log \
-    || { echo "$c configure did not finish, see $c/conda_build_configure.log" >&2; exit 1; }
+    || { echo "$c configure did not finish, see $c/conda_build_configure.log" >&2; show_log conda_build_configure.log; exit 1; }
   if [[ $c == ldt ]]; then
     # Link the Fortran-enabled static HDF4 by full path, ahead of the Fortran-less
     # libmfhdf.so that the environment's netCDF brings in.
@@ -118,6 +131,6 @@ for c in "${components[@]}"; do
   exe=${c^^}
   rm -f "$exe"
   ./compile -j "$jobs" > conda_build_compile.log 2>&1 || true
-  [[ -x $exe ]] || { echo "$c compile failed, see $c/conda_build_compile.log" >&2; exit 1; }
+  [[ -x $exe ]] || { echo "$c compile failed, see $c/conda_build_compile.log" >&2; show_log conda_build_compile.log; exit 1; }
   echo "built $repo/$c/$exe"
 done

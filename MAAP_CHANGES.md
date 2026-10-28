@@ -34,6 +34,10 @@ Sets the `LDT_*`, `LIS_*` and `LVT_*` library variables for the conda environmen
 
 For LDT the script also edits the generated `make/configure.ldt` so that the static Fortran HDF4 libraries are linked by full path, ahead of the Fortran-less `libmfhdf.so` that conda-forge's netCDF brings into the environment.
 
+## 2026-10-28: failed build steps print their log
+
+`build_lisf.sh` sent configure and compile output only to `<component>/conda_build_configure.log` and `conda_build_compile.log`, so a container build, which keeps no files from a failed step, showed only "lis compile failed, see lis/conda_build_compile.log" and never the compiler's error. When a step fails, the script now also prints the log's first error lines (up to 20) and its last 60 lines. Nothing else changes: a successful build prints the same as before.
+
 ## 2026-10-28: README section
 
 "Building with conda-forge (no library image)" in `README.adoc`, with the four commands.
