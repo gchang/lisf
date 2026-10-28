@@ -1,0 +1,39 @@
+# Conda environment for building LDT, LIS and LVT with conda-forge libraries instead of
+# a prebuilt library image (.github/scripts/appimage/lisf.env lists the libraries that image holds).
+#
+#   conda env create -f environment.yml          # or: conda env create -p <prefix> -f environment.yml
+#   conda activate lisf
+#   scripts/conda_build/build_hdf4.sh "$CONDA_PREFIX/hdf4-fortran"
+#   HDF4_PREFIX="$CONDA_PREFIX/hdf4-fortran" scripts/conda_build/build_lisf.sh
+#
+# Versions are the ones this build was checked with (2026-10, linux-64). The GNU 12 compilers
+# match the installation guide's GNU 12.1 line; the MPI builds of HDF5, netCDF and ESMF go
+# with MPICH, which LIS uses for dmpar. conda-forge's hdf4 has no Fortran interface, which
+# LDT needs, so HDF4 is built from source by scripts/conda_build/build_hdf4.sh.
+name: lisf
+channels:
+  - conda-forge
+dependencies:
+  # compilers and build tools (configure is Perl, the dependency scripts are Python 3,
+  # the makefiles call ar from binutils)
+  - gfortran=12.4.0
+  - gcc=12.4.0
+  - gxx=12.4.0
+  - binutils=2.46.1
+  - make=4.4.1
+  - perl=5.44.0
+  - python=3.11.18
+  # MPI and libraries
+  - mpich=4.3.2
+  - esmf=8.9.1=mpi_mpich*
+  - parallelio=2.6.9        # libpioc, which conda-forge's libesmf.so links against
+  - hdf5=1.14.6=mpi_mpich*
+  - libnetcdf=4.10.0=mpi_mpich*
+  - netcdf-fortran=4.6.2=mpi_mpich*
+  - eccodes=2.47.0
+  - openjpeg=2.5.4
+  - libjpeg-turbo=3.2.1
+  - zlib=1.3.2
+  # downloads (the public testcase's NLDAS-2 script uses wget; curl fetches the HDF4 source)
+  - wget=1.25.0
+  - curl=8.23.0
